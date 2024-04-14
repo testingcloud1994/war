@@ -9,24 +9,16 @@ pipeline {
         stage("Git Checkout"){
             steps{
                 sh 'if ([ -d samplewarfile ]);then rm -r *; fi'
-                sh 'git clone https://github.com/testingcloud1994/samplewarfile.git'
+                sh 'git clone https://github.com/testingcloud1994/war.git'
                 }}
-        stage("Maven vulnerability of dependency check "){
+        stage("Maven package"){
             steps{
-                sh "mvn -nsu -f  /var/lib/jenkins/workspace/test/samplewarfile/ verify" 
-                echo "scan done "
-            }}        
-        stage(" Sonar code smeill  check(whitebox testing) "){
-            steps{
-                sh 'ls samplewarfile'
-                sh "mvn -nsu -f  /var/lib/jenkins/workspace/test/samplewarfile/  sonar:sonar -Dsonar.projectKey=myfirst_project -Dsonar.host.url=http://localhost:9000 -Dsonar.login=7747963ab521bc6293c15e2c94e8d0baaa07485b"
+                sh "mvn -nsu -f  /var/lib/jenkins/workspace/test/war/ package" 
                 echo "scan done "
             }
             post{
                 success{
-                    archiveArtifacts artifacts: '**/samplewarfile/target/*.war', fingerprint: true
-                    archiveArtifacts artifacts: '**/samplewarfile/target/*.html', fingerprint: true
-                    /*archiveArtifacts artifacts: , fingerprint: true   */
+                    archiveArtifacts artifacts: '**/war/target/*.war', fingerprint: true
                 }
                 failure{
                     echo "project failed"
@@ -34,7 +26,7 @@ pipeline {
             }}
         stage("docker image creation"){
             steps{
-                sh 'docker build -t suraj_$BUILD_NUMBER:$BUILD_NUMBER samplewarfile;'
+                sh 'docker build -t suraj_$BUILD_NUMBER:$BUILD_NUMBER war;'
                 echo "Image Creation Succeded"
             }}
         stage("login docker"){
@@ -49,8 +41,7 @@ pipeline {
             }}      
 
         stage("cleasning local images and files "){
-            steps{
-            
+            steps{  
             sh 'docker rmi suraj_$BUILD_NUMBER:$BUILD_NUMBER $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;'
             deleteDir();
             echo "cleaning completed"
