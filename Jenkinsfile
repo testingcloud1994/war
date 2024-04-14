@@ -13,7 +13,7 @@ pipeline {
                 }}
         stage("Maven package"){
             steps{
-                sh "mvn -nsu -f  /var/lib/jenkins/workspace/test/war/ package" 
+                sh "ls; mvn -nsu -f  war package" 
                 echo "scan done "
             }
             post{
