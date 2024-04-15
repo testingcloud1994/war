@@ -9,7 +9,6 @@ pipeline {
         stage("Git Checkout"){
             steps{
                 deleteDir();
-                sh 'if ([ -d samplewarfile ]);then rm -r *; fi'
                 sh 'git clone https://github.com/testingcloud1994/war.git'
                 }}
         stage("Maven package"){
