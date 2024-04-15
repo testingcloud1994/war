@@ -46,4 +46,14 @@ pipeline {
             deleteDir();
             echo "cleaning completed"
             }}
+        stage("deploy to test env"){
+             steps{
+                 imput("Please confirm if you want to deploy this image ")
+                 sh "kubectl get ns"
+                // create deployement and push updated yml to git 
+                // deplo image to kubernetes
+                //set nodeto allow localhost  url 
+                // sleep for 4 min to test 
+                 //clean everything to back nrmal 
+             }}
         }}
