@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment{
+        RELEASE_SCOPE='yes'
         DOCKERCRED=credentials('docker_registry') 
         Docker_Space='myphpproject'
     }
@@ -47,11 +48,13 @@ pipeline {
             echo "cleaning completed"
             }}
         stage("deploy to test env"){
-                 parameters{
-                     choice(name: 'want to deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')
-                           }
              steps{ 
-                 sh "kubectl get ns"
+                script {
+                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                }
+                echo "${env.RELEASE_SCOPE}"
+                sh "kubectl get ns"
                 // create deployement and push updated yml to git 
                 // deplo image to kubernetes
                 //set nodeto allow localhost  url 
