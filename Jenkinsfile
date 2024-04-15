@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment{
-        RELEASE_SCOPE='yes'
         DOCKERCRED=credentials('docker_registry') 
         Docker_Space='myphpproject'
     }
@@ -54,7 +53,7 @@ pipeline {
                             parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
                 }
                 echo "${env.RELEASE_SCOPE}"
-                sh "kubectl get ns"
+                //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
                 // deplo image to kubernetes
                 //set nodeto allow localhost  url 
