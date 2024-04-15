@@ -53,10 +53,7 @@ pipeline {
                             parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
                 }*/
                 echo "${env.RELEASE_SCOPE}"
-                sh "minikube start"
                 sh "kubectl get ns"
-                sh "minikube status"
-                sh "minikube stop && minikube delete"
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
                 // deplo image to kubernetes
