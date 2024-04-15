@@ -48,7 +48,9 @@ pipeline {
             }}
         stage("deploy to test env"){
              steps{
-                 parameters: [choice(name: 'want to deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+                 parameters{ 
+                     choice(name: 'want to deploy', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')
+                           }
                  sh "kubectl get ns"
                 // create deployement and push updated yml to git 
                 // deplo image to kubernetes
