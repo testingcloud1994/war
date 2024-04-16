@@ -76,7 +76,7 @@ spec:
       - name: nginx
         image: testingcloud1994/myphpproject:$BUILD_NUMBER
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 
 ---
 
@@ -92,7 +92,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
       nodePort: 30007
 
 EOF
