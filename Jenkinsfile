@@ -55,7 +55,7 @@ pipeline {
                         export KUBECONFIG=/home/suraj/.kube/config ;
                         /usr/local/bin/kubectl apply -f . ;
                         """
-                        sleep(time:300,unit:"SECONDS") 
+                        sleep(time:180 ,unit:"SECONDS") 
                         sh """
                         export KUBECONFIG=/home/suraj/.kube/config 
                         /usr/local/bin/kubectl delete -f .
