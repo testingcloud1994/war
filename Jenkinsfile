@@ -53,10 +53,10 @@ pipeline {
                         sh """
                         ls
                         export KUBECONFIG=/home/suraj/.kube/config
-                        kubectl apply -f .
+                        minikube kubectl apply -f .
                         """
                         sleep(time:300,unit:"SECONDS") 
-                        sh "kubectl delete -f ."
+                        sh "minikube kubectl delete -f ."
                 }}
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
