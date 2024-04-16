@@ -11,8 +11,8 @@ pipeline {
     stages{
         stage("prepare node")
         {steps{
-          sh "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin "
-          sh "sudo apt-get install -y git maven"
+          sh "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin "
+          sh "apt-get install -y git maven"
 
         }}
         stage("Git Checkout"){
