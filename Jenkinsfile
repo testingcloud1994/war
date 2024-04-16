@@ -16,9 +16,10 @@ pipeline {
         stage("Maven package"){
           agent {docker { image 'maven:3.9.6-eclipse-temurin-17-alpine'  }}
             steps{
-                sh "mvn -nsu -f  war package" 
+                dir('war'){
+                sh "ls ;mvn -nsu -f  war package" 
                 echo "scan done "
-            }
+            }}
             post{
                 success{
                     archiveArtifacts artifacts: '**/war/target/*.war', fingerprint: true
