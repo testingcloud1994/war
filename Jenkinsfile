@@ -53,7 +53,48 @@ pipeline {
                         sh ""
                         sh """
                         export KUBECONFIG=/home/suraj/.kube/config ;
-                        /usr/local/bin/kubectl apply -f . ;
+                        cat <<EOF | /usr/local/bin/kubectl create -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: mybestapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mybestapp
+  template:
+    metadata:
+      labels:
+        app: mybestapp
+    spec:
+      containers:
+      - name: nginx
+        image: testingcloud1994/myphpproject:$BUILD_NUMBER
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  selector:
+    app: mybestapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007
+
+EOF
+                        
+                        
                         """
                         sleep(time:120 ,unit:"SECONDS") 
                         sh """
