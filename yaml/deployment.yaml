@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.14.2
+        image: testingcloud1994/myphpproject:$BUILD_NUMBER
         ports:
         - containerPort: 80
