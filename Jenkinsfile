@@ -5,6 +5,7 @@ pipeline {
     environment{
         DOCKERCRED=credentials('docker_registry') 
         Docker_Space='myphpproject'
+        git_branch='test_tools'
     }
         
     stages{
@@ -18,7 +19,7 @@ pipeline {
         stage("Git Checkout"){
             steps{
                 deleteDir();
-                sh 'git clone https://github.com/testingcloud1994/war.git'
+                sh 'git clone -b $git_branch  https://github.com/testingcloud1994/war.git'
                 }}
         stage("Maven package"){
             steps{
@@ -51,6 +52,7 @@ pipeline {
 
         
         stage("deploy to test env"){
+          agent any
              steps{ 
                /* script {
                     env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
