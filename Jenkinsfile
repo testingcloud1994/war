@@ -40,12 +40,7 @@ pipeline {
                 echo "Image Pushed Succeded"
             }}      
 
-        stage("cleasning local images and files "){
-            steps{  
-            sh 'docker rmi suraj_$BUILD_NUMBER:$BUILD_NUMBER $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;'
-            deleteDir();
-            echo "cleaning completed"
-            }}
+        
         stage("deploy to test env"){
              steps{ 
                /* script {
@@ -55,9 +50,12 @@ pipeline {
                 echo "${env.RELEASE_SCOPE}"
                 dir("yaml"){
                 sh """
+                ls
                 export KUBECONFIG=/home/suraj/.kube/config
                 kubectl apply -f .
                 """
+                sleep(time:300,unit:"SECONDS") 
+                sh "kubectl delete -f ."
                 }
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
@@ -66,4 +64,10 @@ pipeline {
                 // sleep for 4 min to test 
                  //clean everything to back nrmal 
              }}
+        stage("cleasning local images and files "){
+            steps{  
+            sh 'docker rmi suraj_$BUILD_NUMBER:$BUILD_NUMBER $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;'
+            deleteDir();
+            echo "cleaning completed"
+            }}
         }}
