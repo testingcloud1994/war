@@ -52,7 +52,6 @@ pipeline {
                     dir("yaml"){
                         sh ""
                         sh """
-                        curl -LO 'https://dl.k8s.io/release/v1.29.3/bin/linux/amd64/kubectl'
                         export KUBECONFIG=/home/suraj/.kube/config ;
                         /usr/local/bin/kubectl apply -f . ;
                         """
