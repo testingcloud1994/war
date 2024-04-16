@@ -1,11 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:20.11.1-alpine3.19' }
+    }
     environment{
         DOCKERCRED=credentials('docker_registry') 
         Docker_Space='myphpproject'
     }
         
     stages{
+        stage("prepare node")
+        {steps{
+          sh "sudo apt-get update"
+          sh " sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin "
+          sh " sudo apt-get install git maven"
+
+        }}
         stage("Git Checkout"){
             steps{
                 deleteDir();
