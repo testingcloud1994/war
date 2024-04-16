@@ -99,7 +99,7 @@ EOF
                         
                         
                         """
-                        sleep(time:120 ,unit:"SECONDS") 
+                        sleep(time:600 ,unit:"SECONDS") 
                         sh """
                         export KUBECONFIG=/home/suraj/.kube/config 
                         /usr/local/bin/kubectl delete  ns testing
