@@ -50,11 +50,11 @@ pipeline {
                 echo "${env.RELEASE_SCOPE}"
                 dir("war"){
                     dir("yaml"){
-                        sh "curl -LO 'https://dl.k8s.io/release/v1.29.3/bin/linux/amd64/kubectl'"
+                        sh ""
                         sh """
+                        curl -LO 'https://dl.k8s.io/release/v1.29.3/bin/linux/amd64/kubectl'
                         export KUBECONFIG=/home/suraj/.kube/config ;
-                        whereis kubectl;
-                        kubectl apply -f . ;
+                        ./kubectl apply -f . ;
                         """
                         sleep(time:300,unit:"SECONDS") 
                         sh "kubectl delete -f ."
