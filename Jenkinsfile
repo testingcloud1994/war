@@ -53,7 +53,12 @@ pipeline {
                             parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
                 }*/
                 echo "${env.RELEASE_SCOPE}"
-                sh "kubectl get ns"
+                dir("yaml"){
+                sh """
+                export KUBECONFIG=/home/suraj/.kube/config
+                kubectl apply -f .
+                """
+                }
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
                 // deplo image to kubernetes
