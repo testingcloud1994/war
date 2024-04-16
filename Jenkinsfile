@@ -8,13 +8,15 @@ pipeline {
         
     stages{
         stage("Git Checkout"){
+          agent any
             steps{
                 deleteDir();
                 sh 'git clone -b $git_branch  https://github.com/testingcloud1994/war.git'
                 }}
         stage("Maven package"){
+          agent {docker { image 'maven:3.9.6-eclipse-temurin-17-alpine'  }}
             steps{
-                sh "ls; mvn -nsu -f  war package" 
+                sh "mvn -nsu -f  war package" 
                 echo "scan done "
             }
             post{
@@ -26,16 +28,19 @@ pipeline {
                 }
             }}
         stage("docker image creation"){
+            agent any
             steps{
                 sh 'docker build -t suraj_$BUILD_NUMBER:$BUILD_NUMBER war;'
                 echo "Image Creation Succeded"
             }}
         stage("login docker"){
+          agent any
             steps{
                 sh 'echo $DOCKERCRED_PSW | docker login -u $DOCKERCRED_USR --password-stdin'
                 echo "Login Succeded"
             }}
         stage("docker push to image"){
+          agent any
             steps{
                 sh 'docker tag suraj_$BUILD_NUMBER:$BUILD_NUMBER $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;docker push $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;'
                 echo "Image Pushed Succeded"
@@ -115,6 +120,7 @@ EOF
                  //clean everything to back nrmal 
              }}
         stage("cleasning local images and files "){
+          agent any
             steps{  
             sh 'docker rmi suraj_$BUILD_NUMBER:$BUILD_NUMBER $DOCKERCRED_USR/$Docker_Space:$BUILD_NUMBER;'
             deleteDir();
