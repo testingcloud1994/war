@@ -53,10 +53,12 @@ pipeline {
                         sh ""
                         sh """
                         export KUBECONFIG=/home/suraj/.kube/config ;
+                        /usr/local/bin/kubectl create  ns testing
                         cat <<EOF | /usr/local/bin/kubectl create -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: testing
   name: nginx-deployment
   labels:
     app: mybestapp
@@ -81,6 +83,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: testing
   name: my-service
 spec:
   type: NodePort
@@ -99,7 +102,7 @@ EOF
                         sleep(time:120 ,unit:"SECONDS") 
                         sh """
                         export KUBECONFIG=/home/suraj/.kube/config 
-                        /usr/local/bin/kubectl delete -f .
+                        /usr/local/bin/kubectl delete  ns testing
                         """
                 }}
                 //sh "kubectl get ns"
