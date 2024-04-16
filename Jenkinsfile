@@ -56,7 +56,10 @@ pipeline {
                         /usr/local/bin/kubectl apply -f . ;
                         """
                         sleep(time:300,unit:"SECONDS") 
-                        sh "/usr/local/bin/kubectl delete -f ."
+                        sh """
+                        export KUBECONFIG=/home/suraj/.kube/config 
+                        /usr/local/bin/kubectl delete -f .
+                        """
                 }}
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
