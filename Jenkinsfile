@@ -91,7 +91,7 @@ spec:
     app: mybestapp
   ports:
     - protocol: TCP
-      port: 80
+      port: 8888
       targetPort: 8080
       nodePort: 30007
 
