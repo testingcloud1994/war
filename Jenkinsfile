@@ -59,7 +59,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: testing
-  name: nginx-deployment
+  name: mytomcatwar
   labels:
     app: mybestapp
 spec:
