@@ -54,10 +54,10 @@ pipeline {
                         sh """
                         curl -LO 'https://dl.k8s.io/release/v1.29.3/bin/linux/amd64/kubectl'
                         export KUBECONFIG=/home/suraj/.kube/config ;
-                        ./kubectl apply -f . ;
+                        /usr/local/bin/kubectl apply -f . ;
                         """
                         sleep(time:300,unit:"SECONDS") 
-                        sh "kubectl delete -f ."
+                        sh "/usr/local/bin/kubectl delete -f ."
                 }}
                 //sh "kubectl get ns"
                 // create deployement and push updated yml to git 
