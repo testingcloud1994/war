@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'ubuntu' }
-    }
+    agent none
     environment{
         DOCKERCRED=credentials('docker_registry') 
         Docker_Space='myphpproject'
@@ -9,12 +7,6 @@ pipeline {
     }
         
     stages{
-        stage("prepare node")
-        {steps{
-          sh "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin "
-          sh "apt-get install -y git maven"
-
-        }}
         stage("Git Checkout"){
             steps{
                 deleteDir();
