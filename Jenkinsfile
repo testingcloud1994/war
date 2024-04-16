@@ -11,7 +11,7 @@ pipeline {
           agent any
             steps{
                 deleteDir();
-                sh 'git clone -b $git_branch  https://github.com/testingcloud1994/war.git'
+                sh 'git clone -b test_tools  https://github.com/testingcloud1994/war.git'
                 }}
         stage("Maven package"){
           agent {docker { image 'maven:3.9.6-eclipse-temurin-17-alpine'  }}
